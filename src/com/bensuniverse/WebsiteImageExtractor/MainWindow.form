@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.bensuniverse.WebsiteImageExtractor.MainWindow">
+  <grid id="27dc6" binding="main_panel" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="814" height="519"/>
+    </constraints>
+    <properties>
+      <preferredSize width="800" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="8cc24" class="javax.swing.JTextField" binding="url">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="e09a2" class="javax.swing.JButton" binding="grab_image_button">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Grab Images"/>
+        </properties>
+      </component>
+      <component id="e1ed5" class="javax.swing.JComboBox" binding="image_list_combobox">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="40" height="1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <model/>
+        </properties>
+      </component>
+      <scrollpane id="79990" binding="middle_scroll_pane">
+        <constraints>
+          <grid row="2" column="2" row-span="4" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="3c5bb" binding="middle_panel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </scrollpane>
+      <component id="6b88" class="javax.swing.JLabel" binding="image_preview_label">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Image Preview:"/>
+        </properties>
+      </component>
+      <component id="aae2f" class="javax.swing.JLabel" binding="select_images_label">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Select Images to Download:"/>
+        </properties>
+      </component>
+      <grid id="a12c2" binding="right_panel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="2" column="3" row-span="5" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="9517f" class="javax.swing.JLabel" binding="file_prefix_label">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="File Prefix:"/>
+            </properties>
+          </component>
+          <component id="f9877" class="javax.swing.JTextField" binding="file_prefix_textarea">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="7"/>
+            </properties>
+          </component>
+          <component id="6cb65" class="javax.swing.JLabel" binding="start_index_label">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Start Index:"/>
+            </properties>
+          </component>
+          <component id="4bd7f" class="javax.swing.JSpinner" binding="start_index_spinner">
+            <constraints>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="6c786" class="javax.swing.JLabel" binding="image_output_settings_label">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Image Output Settings:"/>
+            </properties>
+          </component>
+          <component id="101d9" class="javax.swing.JLabel" binding="auto_select_settings_label">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <font style="1"/>
+              <text value="Auto-Select Settings:"/>
+            </properties>
+          </component>
+          <component id="ebae2" class="javax.swing.JLabel" binding="including_label">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Including:"/>
+            </properties>
+          </component>
+          <component id="24aa4" class="javax.swing.JTextField" binding="included_strings_textfield">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="7"/>
+              <toolTipText value="Comma separated list; inclusive"/>
+            </properties>
+          </component>
+          <component id="f3f6" class="javax.swing.JLabel" binding="excluding_label">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Excluding:"/>
+            </properties>
+          </component>
+          <component id="31e7" class="javax.swing.JTextField" binding="excluded_strings_textfield">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="7"/>
+              <toolTipText value="Comma separated list"/>
+            </properties>
+          </component>
+          <component id="fb865" class="javax.swing.JSeparator" binding="separator_01">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="c31f0" class="javax.swing.JButton" binding="update_checkboxes_button">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Update Checkboxes"/>
+            </properties>
+          </component>
+          <component id="b4a9b" class="javax.swing.JButton" binding="download_button">
+            <constraints>
+              <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Download!"/>
+            </properties>
+          </component>
+          <component id="5767a" class="javax.swing.JProgressBar" binding="main_progress_bar">
+            <constraints>
+              <grid row="16" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <string value="0%"/>
+              <stringPainted value="true"/>
+              <value value="0"/>
+            </properties>
+          </component>
+          <vspacer id="11557">
+            <constraints>
+              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0" ipady="1"/>
+            </constraints>
+          </vspacer>
+          <vspacer id="686d8">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+          <component id="c7163" class="javax.swing.JLabel" binding="extension_label">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Extension:"/>
+            </properties>
+          </component>
+          <component id="5a01e" class="javax.swing.JComboBox" binding="extension_combobox">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value=".png"/>
+                <item value=".jpg"/>
+                <item value=".gif"/>
+              </model>
+            </properties>
+          </component>
+          <component id="5c1b7" class="javax.swing.JLabel" binding="status_label">
+            <constraints>
+              <grid row="17" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="247e8" class="javax.swing.JLabel" binding="folder_location_label">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Location:"/>
+            </properties>
+          </component>
+          <component id="2dd78" class="javax.swing.JTextField" binding="folder_location_textfield">
+            <constraints>
+              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="7"/>
+            </properties>
+          </component>
+          <component id="f7e63" class="javax.swing.JButton" binding="browse_button">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Browse"/>
+            </properties>
+          </component>
+          <component id="ad1e4" class="javax.swing.JSeparator" binding="separator_02">
+            <constraints>
+              <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <vspacer id="89c3">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+        </children>
+      </grid>
+      <component id="47e63" class="javax.swing.JButton" binding="move_up_button">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Move up"/>
+        </properties>
+      </component>
+      <component id="589ec" class="javax.swing.JButton" binding="move_down_button">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Move down"/>
+        </properties>
+      </component>
+      <scrollpane id="c429a" binding="left_scroll_pane">
+        <constraints>
+          <grid row="5" column="0" row-span="2" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="dd4d4" binding="left_panel" layout-manager="GridBagLayout">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="93906" class="javax.swing.JLabel" binding="image_preview">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </scrollpane>
+      <component id="ef6bb" class="javax.swing.JLabel" binding="current_position_label">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Current position: 0/0"/>
+        </properties>
+      </component>
+      <component id="8ba80" class="javax.swing.JButton" binding="delete_unchecked_boxes_button">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Delete unchecked boxes"/>
+        </properties>
+      </component>
+      <component id="c6cde" class="javax.swing.JLabel" binding="enter_url_label">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Enter URL:"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
