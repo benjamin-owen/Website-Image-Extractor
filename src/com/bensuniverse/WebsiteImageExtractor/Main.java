@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         // set look and feel
-        FlatDarkLaf.install();
+        FlatDarkLaf.setup();
 
         // use system look and feel
 //        try {
