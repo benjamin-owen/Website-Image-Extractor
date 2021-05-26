@@ -2,6 +2,7 @@ package com.bensuniverse.WebsiteImageExtractor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MainWindow extends JFrame {
 
@@ -379,6 +379,7 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(main_panel);
         this.setSize(800, 500);
+        this.setMinimumSize(new Dimension(800, 500));
 //        this.setResizable(false);
         this.setLocationRelativeTo(null);
 
