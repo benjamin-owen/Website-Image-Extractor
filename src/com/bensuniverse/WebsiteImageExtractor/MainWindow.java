@@ -56,6 +56,7 @@ public class MainWindow extends JFrame {
     private JSeparator separator_02;
     private JSeparator separator_01;
     private JPanel left_panel;
+    private JLabel footer_label;
 
     // other variables declarations
     private ArrayList<String> srcs = new ArrayList<String>();
@@ -70,10 +71,14 @@ public class MainWindow extends JFrame {
     private ImageGrabber ig = new ImageGrabber();
     private AutoCheckbox ac = new AutoCheckbox();
 
-    public MainWindow(String title) {
+    public MainWindow() {
 
         // set window title
-        super(title);
+        super(Main.getName());
+
+        // set footer label text (version and other info)
+        String footer_text = "Version " + Main.getVersion() + " | " + Main.getAuthor() + " | " + Main.getDate();
+        footer_label.setText(footer_text);
 
         // set JScrollPane scroll speed
         left_scroll_pane.getVerticalScrollBar().setUnitIncrement(16);
