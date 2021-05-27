@@ -79,24 +79,6 @@ public class ImageGrabber {
 
         }
 
-        // remove duplicate entries from URL list
-//        urls = new ArrayList<String>(new LinkedHashSet<String>(urls));
-//        ArrayList urls_nodup = new ArrayList<String>();
-//        for (String url_current : urls) {
-//
-//            try {
-//                if (!urls_nodup.contains(url.substring(':'))) {
-//
-//                    urls_nodup.add(url_current);
-//
-//                }
-//            } catch (StringIndexOutOfBoundsException e) {
-//
-//                // do nothing
-//
-//            }
-//        }
-
         // return list of URLs
         return urls;
 
