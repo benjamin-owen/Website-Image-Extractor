@@ -28,7 +28,9 @@ Currently, the program does not support extracting images from pages which use J
 
 <tr>
 <td>Image Preview and Order</td>
-<td>The leftmost panel in the GUI is reserved for image previews and manipulation of the order of images in the image list (center panel, explained in detail below).  Using the "Move up" and "Move down" buttons, the current selected image (from the dropdown) will be moved up and down on the list of all images, respectively.  This is useful for images that need to be named in sequential order to correct any images that are not in the desired order.</td>
+<td>The leftmost panel in the GUI is reserved for image previews and manipulation of the order of images in the image list (center panel, explained in detail below).  After selecting an image from the dropdown, a preview of that image will appear in the space below the "Move up" and "Move down" buttons.  If the image URL is not valid (invalid URL or other issue), a "File not found" image will be displayed instead.
+
+Using the "Move up" and "Move down" buttons, the current selected image (from the dropdown) will be moved up and down on the list of all images, respectively.  This is useful for images that need to be named in sequential order to correct any images that are not in the desired order.</td>
 <td><img src = "https://www.bensuniverse.com/media/software/website-image-extractor/Website-Image-Extractor-image-preview.jpg" alt = "Image preview and order"></td>
 </tr>
 
@@ -47,6 +49,8 @@ Currently, the program does not support extracting images from pages which use J
 <tr>
 <td>Image Output Settings</td>
 <td>The image output settings are used to determine the output image file name.  The "File prefix" field is added at the beginning of the image file name.  The "Start index" spinner determines which integer value to begin counting for sequential image names.  The "Extension" dropdown is used to select the image file type.
+
+If you wish to preserve the original image file names, simply uncheck the "Enable custom file names" checkbox, and those fields will be disabled and ignored.
 
 The "Browse" button can be used to select a different image output location (default is the same location that the program is running in).</td>
 <td><img src = "https://www.bensuniverse.com/media/software/website-image-extractor/Website-Image-Extractor-image-output.jpg" alt = "Image output settings"></td>
