@@ -9,7 +9,7 @@ public class Main {
     private final static String NAME = "Website Image Extractor";
     private final static String VERSION = "1.0";
     private final static String AUTHOR = "Benjamin Owen";
-    private final static String DATE = "2021-05-XX";
+    private final static String DATE = "2021-05-26";
 
     public static void main(String[] args) {
 
