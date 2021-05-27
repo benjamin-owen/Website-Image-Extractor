@@ -6,6 +6,11 @@ import javax.swing.*;
 
 public class Main {
 
+    private final static String NAME = "Website Image Extractor";
+    private final static String VERSION = "1.0";
+    private final static String AUTHOR = "Benjamin Owen";
+    private final static String DATE = "2021-05-XX";
+
     public static void main(String[] args) {
 
         // set look and feel
@@ -19,7 +24,31 @@ public class Main {
 //        }
 
         // initialize JFrame with title passed and set visibility to true
-        new MainWindow("Website Image Extractor").setVisible(true);
+        new MainWindow().setVisible(true);
+
+    }
+
+    public static String getName() {
+
+        return NAME;
+
+    }
+
+    public static String getVersion() {
+
+        return VERSION;
+
+    }
+
+    public static String getAuthor() {
+
+        return AUTHOR;
+
+    }
+
+    public static String getDate() {
+
+        return DATE;
 
     }
 }
