@@ -222,7 +222,7 @@ public class ImageGrabber {
 
     }
 
-    public void downloadImages(ArrayList<String> urls, String file_location, String prefix, String extension, int start_index, JProgressBar progress_bar, JPanel panel, JLabel status) {
+    public void downloadImages(ArrayList<String> urls, String file_location, boolean rename, String prefix, String extension, int start_index, JProgressBar progress_bar, JPanel panel, JLabel status) {
 
         // get number of digits of total image count
         int prefixNum = (int) Math.log10(urls.size());
@@ -263,22 +263,26 @@ public class ImageGrabber {
 
             }
             // use all given variables to create file output location name
-            File outputFule = new File(file_location + prefix + indexPrefix + Integer.toString(i + start_index) + extension);
+            File outputFile;
+            if (rename)
+                outputFile = new File(file_location + prefix + indexPrefix + Integer.toString(i + start_index) + extension);
+            else
+                outputFile = new File(file_location + currentURL.toString().substring(currentURL.toString().lastIndexOf('/')));
 
             // save image to file
             try {
 
                 if (extension.equalsIgnoreCase(".jpg"))
-                    ImageIO.write(currentImg, "jpg", outputFule);
+                    ImageIO.write(currentImg, "jpg", outputFile);
                 else
-                    ImageIO.write(currentImg, "png", outputFule);
+                    ImageIO.write(currentImg, "png", outputFile);
 
             } catch (IOException e) {
 
                 // my guess would be permission error here
                 try {
 
-                    Files.delete(Paths.get(outputFule.getAbsolutePath()));
+                    Files.delete(Paths.get(outputFile.getAbsolutePath()));
 
                 } catch (IOException ioException) {
 

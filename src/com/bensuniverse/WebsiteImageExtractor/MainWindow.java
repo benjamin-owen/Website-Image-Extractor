@@ -57,6 +57,7 @@ public class MainWindow extends JFrame {
     private JSeparator separator_01;
     private JPanel left_panel;
     private JLabel footer_label;
+    private JCheckBox file_rename_checkbox;
 
     // other variables declarations
     private ArrayList<String> srcs = new ArrayList<String>();
@@ -224,7 +225,7 @@ public class MainWindow extends JFrame {
                     public void run() {
 
                         // download all images
-                        ig.downloadImages(checkedBoxes, output_folder, file_prefix_textarea.getText(), extension_combobox.getSelectedItem().toString(), (int) start_index_spinner.getValue(), main_progress_bar, right_panel, status_label);
+                        ig.downloadImages(checkedBoxes, output_folder, file_rename_checkbox.isSelected(), file_prefix_textarea.getText(), extension_combobox.getSelectedItem().toString(), (int) start_index_spinner.getValue(), main_progress_bar, right_panel, status_label);
 
                         // when finished, set status text and fill progress bar
                         status_label.setText("Done!");
@@ -366,6 +367,22 @@ public class MainWindow extends JFrame {
                 images.removeAll(remove_checkboxes);
 
                 updateImageLists(model);
+
+            }
+        });
+
+        // "Enable custom file names" checkbox listener
+        file_rename_checkbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // disable naming fields if unselected
+                boolean selected = file_rename_checkbox.isSelected();
+
+                file_prefix_label.setEnabled(selected);
+                file_prefix_textarea.setEnabled(selected);
+                start_index_label.setEnabled(selected);
+                start_index_spinner.setEnabled(selected);
 
             }
         });
