@@ -383,6 +383,8 @@ public class MainWindow extends JFrame {
                 file_prefix_textarea.setEnabled(selected);
                 start_index_label.setEnabled(selected);
                 start_index_spinner.setEnabled(selected);
+                extension_label.setEnabled(selected);
+                extension_combobox.setEnabled(selected);
 
             }
         });
