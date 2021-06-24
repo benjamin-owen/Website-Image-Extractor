@@ -20,6 +20,21 @@ public class ImageGrabber {
 
     public ArrayList<String> getImages(String url, boolean full_URL) {
 
+        // find index of third '/' in URL
+        int slash_index = 0;
+        int slash_count = 0;
+        while (slash_count < 3) {
+
+            slash_index += url.indexOf('/');
+            slash_count++;
+
+            url.substring(url.indexOf('/'));
+
+        }
+
+        String guess_url = url.substring(url.indexOf("http"), slash_index);
+        System.out.println("GUESS URL: " + guess_url);
+
         // list to contain image URLs
         ArrayList<String> urls = new ArrayList<String>();
 
@@ -38,6 +53,8 @@ public class ImageGrabber {
             String line;
             while ((line = r.readLine()) != null) {
 
+                System.out.println("RAW LINE: " + line);
+
                 // loop through each line in source code
                 for (String str : line.split("\"")) {
 
@@ -53,14 +70,22 @@ public class ImageGrabber {
                     extensions.add("heif");
 
                     // check if line of code references an image file
-                    if (str.toLowerCase().contains("http") && extensions.stream().anyMatch(s -> str.toLowerCase().contains(s)) && !str.contains("=")) {
+                    String finalStr = str;
+                    if (extensions.stream().anyMatch(s -> finalStr.toLowerCase().contains(s)) && !str.contains("=")) {
+
+                        if (!str.toLowerCase().contains("http")) {
+
+                            // try adding guess url
+                            str = guess_url + str;
+                            System.out.println("MODIFIED: " + str);
+
+                        }
 
                         // add line to ArrayList (will be the image url)
                         if (full_URL)
                             urls.add(str);
                         else
                             urls.add(str.substring(str.lastIndexOf("/") + 1));
-
                     }
                 }
             }
