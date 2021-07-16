@@ -58,6 +58,9 @@ public class MainWindow extends JFrame {
     private JPanel left_panel;
     private JLabel footer_label;
     private JCheckBox file_rename_checkbox;
+    private JButton select_none_button;
+    private JButton select_all_button;
+    private JPanel checkbox_button_panel;
 
     // other variables declarations
     private ArrayList<String> srcs = new ArrayList<String>();
@@ -338,6 +341,34 @@ public class MainWindow extends JFrame {
             }
         });
 
+        // "Select all" button listener
+        select_all_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // loop through each JCheckBox in the previously populated JCheckBox ArrayList
+                for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
+
+                    ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).setSelected(true);
+
+                }
+            }
+        });
+
+        // "Select none" button listener
+        select_none_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // loop through each JCheckBox in the previously populated JCheckBox ArrayList
+                for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
+
+                    ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).setSelected(false);
+
+                }
+            }
+        });
+
         // "Delete unchecked boxes" button listener
         delete_unchecked_boxes_button.addActionListener(new ActionListener() {
             @Override
@@ -402,8 +433,8 @@ public class MainWindow extends JFrame {
         // other JPanel properties
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(main_panel);
-        this.setSize(800, 500);
-        this.setMinimumSize(new Dimension(800, 500));
+        this.setSize(850, 550);
+        this.setMinimumSize(new Dimension(850, 550));
 //        this.setResizable(false);
         this.setLocationRelativeTo(null);
 
