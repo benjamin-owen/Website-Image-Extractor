@@ -5,9 +5,9 @@ import com.formdev.flatlaf.FlatDarkLaf;
 public class Main {
 
     private final static String NAME = "Website Image Extractor";
-    private final static String VERSION = "1.1";
+    private final static String VERSION = "1.2";
     private final static String AUTHOR = "Benjamin Owen";
-    private final static String DATE = "2021-05-27";
+    private final static String DATE = "2021-07-15";
 
     public static void main(String[] args) {
 
