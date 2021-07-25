@@ -240,7 +240,7 @@ public class ImageGrabber {
     public void downloadImages(ArrayList<String> urls, String file_location, boolean rename, String prefix, String extension, int start_index, JProgressBar progress_bar, JPanel panel, JLabel status) {
 
         // get number of digits of total image count
-        int prefixNum = (int) Math.log10(start_index + urls.size()); // (start_index + urls.size()) in order to add 0 when not starting at 0
+        int prefixNum = (int) Math.log10((start_index - 1) + urls.size()); // (start_index + urls.size()) in order to add 0 when not starting at 0
         System.out.println("prefixNum: " + prefixNum);
 
         // loop through each index of image list
