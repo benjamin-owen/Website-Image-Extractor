@@ -25,15 +25,18 @@ public class ImageGrabber {
         // find index of third '/' in URL
         int slash_index = 0;
         int slash_count = 0;
-        while (slash_count < 3) {
+        for (slash_index = 0; slash_index < url.length(); slash_index++) {
 
-            slash_index += url.indexOf('/');
-            slash_count++;
+            if (url.charAt(slash_index) == '/')
+                slash_count++;
 
-            url.substring(url.indexOf('/'));
+            if (slash_count >= 3)
+                break;
 
         }
 
+        System.out.println("RAW URL: " + url);
+        System.out.println("SLASH INDEX: " + slash_index);
         String guess_url = url.substring(url.indexOf("http"), slash_index);
         System.out.println("GUESS URL: " + guess_url);
 
