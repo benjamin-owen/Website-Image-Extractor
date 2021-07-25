@@ -1,6 +1,8 @@
 package com.bensuniverse.WebsiteImageExtractor;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -166,6 +168,7 @@ public class ImageGrabber {
             } catch (Exception e) {
 
                 // if some error prevents image from working
+                System.out.println("Error 01");
                 image = ImageIO.read(getClass().getResource("/file_not_found.jpg"));
                 image = resize(image, max_width);
 
@@ -178,6 +181,7 @@ public class ImageGrabber {
         catch (IOException e) {
 
 //            System.out.println("> " + url.toString());
+            System.out.println("Error 02");
             e.printStackTrace();
 
             try {
@@ -190,6 +194,7 @@ public class ImageGrabber {
 
             } catch (IOException e2) {
 
+                System.out.println("Error 03");
                 // should never happen, rip if it does
                 e2.printStackTrace();
 
