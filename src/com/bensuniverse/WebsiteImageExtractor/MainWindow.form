@@ -313,22 +313,6 @@
           </component>
         </children>
       </grid>
-      <component id="47e63" class="javax.swing.JButton" binding="move_up_button">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Move up"/>
-        </properties>
-      </component>
-      <component id="589ec" class="javax.swing.JButton" binding="move_down_button">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Move down"/>
-        </properties>
-      </component>
       <scrollpane id="c429a" binding="left_scroll_pane">
         <constraints>
           <grid row="5" column="0" row-span="3" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -354,14 +338,6 @@
           </grid>
         </children>
       </scrollpane>
-      <component id="ef6bb" class="javax.swing.JLabel" binding="current_position_label">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Current position: 0/0"/>
-        </properties>
-      </component>
       <component id="c6cde" class="javax.swing.JLabel" binding="enter_url_label">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
@@ -400,16 +376,16 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Select none"/>
+              <text value="Deselect all"/>
             </properties>
           </component>
-          <component id="62e2e" class="javax.swing.JButton" binding="delete_unchecked_boxes_button">
+          <component id="62e2e" class="javax.swing.JButton" binding="delete_selected_items_button">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <horizontalAlignment value="0"/>
-              <text value="Delete unchecked boxes"/>
+              <text value="Delete selected items"/>
             </properties>
           </component>
         </children>

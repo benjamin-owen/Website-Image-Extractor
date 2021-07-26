@@ -39,7 +39,7 @@ public class MainWindow extends JFrame {
     private JButton move_down_button;
     private JScrollPane left_scroll_pane;
     private JLabel current_position_label;
-    private JButton delete_unchecked_boxes_button;
+    private JButton delete_selected_items_button;
 
     // unused GUI declarations
     private JLabel enter_url_label;
@@ -66,7 +66,9 @@ public class MainWindow extends JFrame {
     private ArrayList<String> srcs = new ArrayList<String>();
     private ArrayList<String> srcs_NOURL = new ArrayList<String>();
 
-    private ArrayList<JCheckBox> images = new ArrayList<JCheckBox>();
+    private ArrayList<ImageObject> images = new ArrayList<ImageObject>();
+
+//    private ArrayList<JCheckBox> images = new ArrayList<JCheckBox>();
 
     private String output_folder;
 
@@ -74,6 +76,8 @@ public class MainWindow extends JFrame {
 
     private ImageGrabber ig = new ImageGrabber();
     private AutoCheckbox ac = new AutoCheckbox();
+
+    private ImageList il = new ImageList();
 
     public MainWindow() {
 
@@ -133,8 +137,14 @@ public class MainWindow extends JFrame {
                     }
                 }
 
+                for (int i = 0; i < srcs.size(); i++) {
+
+                    images.add(new ImageObject(srcs_NOURL.get(i), srcs.get(i)));
+
+                }
+
                 // get list of checkboxes (already checked) based on user input in JTextFields
-                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
+//                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
 
                 updateImageLists(model);
 
@@ -185,18 +195,18 @@ public class MainWindow extends JFrame {
                 middle_panel.remove(0);
 
                 // get list of checkboxes (already checked) based on user input in JTextFields
-                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
+//                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
 
                 // create vertical box (same as earlier, to place checkboxes in)
                 Box box = Box.createVerticalBox();
 
                 // loop through JCheckBox ArrayList
-                for (JCheckBox checkbox : images) {
-
-                    // add checkbox to box (may be checked)
-                    box.add(checkbox);
-
-                }
+//                for (JCheckBox checkbox : images) {
+//
+//                    // add checkbox to box (may be checked)
+//                    box.add(checkbox);
+//
+//                }
 
                 // add box to panel and refresh
                 middle_panel.add(box);
@@ -265,112 +275,30 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // "Move up" button listener
-        move_up_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                // get selected index of combo box
-                int current_index = image_list_combobox.getSelectedIndex();
-                System.out.println("current index: " + current_index);
-
-                // make sure image isn't already at the top of the list
-                if (current_index > 0) {
-
-                    // get current values at index
-                    String temp = srcs.get(current_index);
-                    String temp_NOURL = srcs_NOURL.get(current_index);
-                    JCheckBox temp_cb = ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(current_index));
-
-                    // add value in front of above item
-                    srcs.add(current_index - 1, temp);
-                    srcs_NOURL.add(current_index - 1, temp_NOURL);
-                    images.add(current_index - 1, temp_cb);
-
-                    // remove old value
-                    srcs.remove(current_index + 1);
-                    srcs_NOURL.remove(current_index + 1);
-                    images.remove(current_index + 1);
-
-                    current_position_label.setText("Current position: " + current_index + "/" + srcs_NOURL.size());
-
-                    updateImageLists(model);
-
-                    image_list_combobox.setSelectedIndex(current_index - 1);
-
-                }
-
-            }
-        });
-
-        // "Move down" button listener
-        move_down_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                // get selected index of combo box
-                int current_index = image_list_combobox.getSelectedIndex();
-                System.out.println("current index: " + current_index);
-
-                // make sure image isn't already at the top of the list
-                if (current_index < srcs_NOURL.size() - 1) {
-
-                    // get current values at index
-                    String temp = srcs.get(current_index);
-                    String temp_NOURL = srcs_NOURL.get(current_index);
-                    JCheckBox temp_cb = ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(current_index));
-
-                    // add value after of below item
-                    srcs.add(current_index + 2, temp);
-                    srcs_NOURL.add(current_index + 2, temp_NOURL);
-                    images.add(current_index + 2, temp_cb);
-
-                    // remove old value
-                    srcs.remove(current_index);
-                    srcs_NOURL.remove(current_index);
-                    images.remove(current_index);
-
-                    current_position_label.setText("Current position: " + (current_index + 2) + "/" + srcs_NOURL.size());
-
-                    updateImageLists(model);
-
-                    image_list_combobox.setSelectedIndex(current_index + 1);
-
-                }
-
-            }
-        });
-
         // "Select all" button listener
         select_all_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // loop through each JCheckBox in the previously populated JCheckBox ArrayList
-                for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
+                il.getList().setSelectionInterval(0, il.getModel().getSize());
+                il.getList().requestFocusInWindow();
 
-                    ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).setSelected(true);
-
-                }
             }
         });
 
-        // "Select none" button listener
+        // "Deselect all" button listener
         select_none_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // loop through each JCheckBox in the previously populated JCheckBox ArrayList
-                for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
+                il.getList().clearSelection();
+                il.getList().requestFocusInWindow();
 
-                    ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).setSelected(false);
-
-                }
             }
         });
 
-        // "Delete unchecked boxes" button listener
-        delete_unchecked_boxes_button.addActionListener(new ActionListener() {
+        // "Delete selected items" button listener
+        delete_selected_items_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -378,6 +306,15 @@ public class MainWindow extends JFrame {
                 ArrayList<String> remove_srcs = new ArrayList<String>();
                 ArrayList<String> remove_srcs_NOURL = new ArrayList<String>();
                 ArrayList<JCheckBox> remove_checkboxes = new ArrayList<JCheckBox>();
+
+                for (int i = 0; i < il.getModel().getSize(); i++) {
+
+                    System.out.println("Item: " + i);
+                    System.out.println("Short URL: " + ((ImageObject) il.getModel().getElementAt(i)).toString());
+                    System.out.println("URL: " + ((ImageObject) il.getModel().getElementAt(i)).getUrl());
+                    System.out.println("***");
+
+                }
 
                 // loop through each JCheckBox in the previously populated JCheckBox ArrayList
                 for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
@@ -449,41 +386,11 @@ public class MainWindow extends JFrame {
 
         }
 
-        ArrayList<String> test = new ArrayList<String>();
-        test.add("A");
-        test.add("B");
-        test.add("E");
-        test.add("C");
-        test.add("D");
-        JScrollPane pane = new ImageList().getImageList(test);
-        middle_panel.add(pane);
-
         // set URL text field to be selected
         url.requestFocusInWindow();
     }
 
     private void updateImageLists(DefaultComboBoxModel model) {
-
-        // make a vertical box (will place JCheckBoxes in this)
-        Box box = Box.createVerticalBox();
-
-        // clear JComboBox (old image names)
-        model.removeAllElements();
-
-        // loop through all image file names
-        for (String src : srcs_NOURL) {
-
-            // add image name to JComboBox
-            model.addElement(src);
-
-        }
-
-        // add each checkbox from images
-        for (JCheckBox cb : images) {
-
-            box.add(cb);
-
-        }
 
         try {
 
@@ -517,7 +424,7 @@ public class MainWindow extends JFrame {
         image_list_combobox.setSelectedIndex(image_list_combobox.getSelectedIndex());
 
         // add checkboxes and update panel to refresh
-        middle_panel.add(box);
+        middle_panel.add(il.getImageList(images));
         middle_panel.updateUI();
 
     }

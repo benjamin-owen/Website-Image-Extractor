@@ -9,12 +9,13 @@ import java.util.ArrayList;
 public class ImageList extends JFrame {
 
     JList<String> list;
-    DefaultListModel<String> list_model;
-    
-    public JScrollPane getImageList(ArrayList<String> images) {
+    DefaultListModel<ImageObject> list_model;
+
+    // pass image URLs and return pane with image list
+    public JScrollPane getImageList(ArrayList<ImageObject> images) {
 
         list_model = createStringListModel(images);
-        list = new JList<String>(list_model);
+        list = new JList(list_model);
         MyMouseAdapter adapter = new MyMouseAdapter();
         list.addMouseListener(adapter);
         list.addMouseMotionListener(adapter);
@@ -22,35 +23,24 @@ public class ImageList extends JFrame {
 
         JScrollPane pane = new JScrollPane(list);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        pane.setPreferredSize(new Dimension(385, 300));
+        pane.setPreferredSize(new Dimension(385, 395));
         pane.setBorder(null);
 
         return pane;
+
     }
 
-//    public ImageList() {
-//        ArrayList<String> test = new ArrayList<String>();
-//        test.add("A");
-//        test.add("B");
-//        test.add("E");
-//        test.add("C");
-//        test.add("D");
-//        list_model = createStringListModel(test);
-//        list = new JList<String>(list_model);
-//        MyMouseAdapter adapter = new MyMouseAdapter();
-//        list.addMouseListener(adapter);
-//        list.addMouseMotionListener(adapter);
-//
-//        JScrollPane pane = new JScrollPane(list);
-//        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-//
-//        JPanel content = new JPanel();
-//        content.add(pane);
-//        this.add(content);
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.pack();
-//        this.setVisible(true);
-//    }
+    public JList getList() {
+
+        return list;
+
+    }
+
+    public DefaultListModel getModel() {
+
+        return list_model;
+
+    }
 
     private class MyMouseAdapter extends MouseInputAdapter {
         private boolean mouseDragging = false;
@@ -75,7 +65,7 @@ public class ImageList extends JFrame {
                 int currentIndex = list.locationToIndex(e.getPoint());
                 if (currentIndex != dragSourceIndex) {
                     int dragTargetIndex = list.getSelectedIndex();
-                    String dragElement = list_model.get(dragSourceIndex);
+                    ImageObject dragElement = list_model.get(dragSourceIndex);
                     list_model.remove(dragSourceIndex);
                     list_model.add(dragTargetIndex, dragElement);
                     dragSourceIndex = currentIndex;
@@ -84,10 +74,9 @@ public class ImageList extends JFrame {
         }
     }
 
-    private DefaultListModel<String> createStringListModel(ArrayList<String> listElements) {
-//        final String[] listElements = new String[] { "Cat", "Dog", "Cow", "Horse", "Pig", "Monkey" };
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
-        for (String element : listElements) {
+    private DefaultListModel<ImageObject> createStringListModel(ArrayList<ImageObject> listElements) {
+        DefaultListModel<ImageObject> listModel = new DefaultListModel<ImageObject>();
+        for (ImageObject element : listElements) {
             listModel.addElement(element);
         }
         return listModel;
