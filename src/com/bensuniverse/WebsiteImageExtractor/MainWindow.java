@@ -449,6 +449,15 @@ public class MainWindow extends JFrame {
 
         }
 
+        ArrayList<String> test = new ArrayList<String>();
+        test.add("A");
+        test.add("B");
+        test.add("E");
+        test.add("C");
+        test.add("D");
+        JScrollPane pane = new ImageList().getImageList(test);
+        middle_panel.add(pane);
+
         // set URL text field to be selected
         url.requestFocusInWindow();
     }

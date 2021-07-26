@@ -16,7 +16,6 @@ public class Main {
 
         // initialize JFrame with title passed and set visibility to true
         new MainWindow().setVisible(true);
-
     }
 
     public static String getName() {
