@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ImageGrabber {
 
-    public ArrayList<String> getImages(String url, boolean full_URL) {
+    public ArrayList<ImageObject> getImages(String url) {
 
         // find index of third '/' in URL
         int slash_index = 0;
@@ -41,7 +41,7 @@ public class ImageGrabber {
         System.out.println("GUESS URL: " + guess_url);
 
         // list to contain image URLs
-        ArrayList<String> urls = new ArrayList<String>();
+        ArrayList<ImageObject> images = new ArrayList<ImageObject>();
 
         // avoid HTTP 403 errors
         try {
@@ -54,7 +54,6 @@ public class ImageGrabber {
             // get HTML source
             BufferedReader r = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
 
-            urls = new ArrayList<String>();
             String line;
             while ((line = r.readLine()) != null) {
 
@@ -86,19 +85,22 @@ public class ImageGrabber {
 
                         }
 
-                        // add line to ArrayList (will be the image url)
-                        if (full_URL)
-                            urls.add(str);
-                        else
-                            urls.add(str.substring(str.lastIndexOf("/") + 1));
+                        for (String extension : extensions) {
+
+                            if (str.substring(str.lastIndexOf("/") + 1).contains(extension) &&
+                            str.substring(str.indexOf(extension)).length() <= extension.length()) {
+
+                                images.add(new ImageObject(str.substring(str.lastIndexOf("/") + 1), str));
+
+                            }
+                        }
                     }
                 }
             }
 
-            // print found image URLs (debugging purposes)
-            for (String tempurl : urls) {
+            for (ImageObject io : images) {
 
-                System.out.println(tempurl);
+                System.out.println("Found image: " + io.toString());
 
             }
 
@@ -110,43 +112,7 @@ public class ImageGrabber {
         }
 
         // return list of URLs
-        return urls;
-
-    }
-
-    public URL getURLfromShortened(ArrayList<String> urls, ArrayList<String> urls_short, String url_short) {
-
-        for (String temp : urls) {
-
-            System.out.print("  $$" + temp);
-
-        }
-        System.out.println();
-
-        for (String temp : urls_short) {
-
-            System.out.print("  %%" + temp);
-
-        }
-        System.out.println();
-
-        System.out.println(url_short);
-
-        // use parallel lists to return the full URL from the index of the shortened one
-        String full_URL = urls.get(urls_short.indexOf(url_short));
-        URL url = null;
-
-        try {
-
-            url = new URL(full_URL);
-
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-
-        }
-
-        return url;
+        return images;
 
     }
 

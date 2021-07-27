@@ -64,13 +64,9 @@ public class MainWindow extends JFrame {
     private JPanel checkbox_button_panel;
 
     // other variables declarations
-    private ArrayList<String> srcs = new ArrayList<String>();
-    private ArrayList<String> srcs_NOURL = new ArrayList<String>();
-
     private ArrayList<ImageObject> images = new ArrayList<ImageObject>();
 
-    public static URL selected_image;
-//    private ArrayList<JCheckBox> images = new ArrayList<JCheckBox>();
+    private URL selected_image;
 
     private String output_folder;
 
@@ -115,31 +111,8 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                // reset existing list of images
-                srcs = new ArrayList<String>();
-                srcs_NOURL = new ArrayList<String>();
-
                 // get all image URLs from website, both with http:// and without main URL
-                ArrayList srcs_temp = ig.getImages(url.getText(), true);
-                ArrayList srcs_NOURL_temp = ig.getImages(url.getText(), false);
-
-                // remove duplicates from lists
-                for (int i = 0; i < srcs_temp.size(); i++) {
-
-                    if (!srcs_NOURL.contains(srcs_NOURL_temp.get(i))) {
-
-                        srcs_NOURL.add((String) srcs_NOURL_temp.get(i));
-                        srcs.add((String) srcs_temp.get(i));
-
-                    }
-                }
-
-                images.clear();
-                for (int i = 0; i < srcs.size(); i++) {
-
-                    images.add(new ImageObject(srcs_NOURL.get(i), srcs.get(i)));
-
-                }
+                images = ig.getImages(url.getText());
 
                 updateImageLists();
 
@@ -272,17 +245,6 @@ public class MainWindow extends JFrame {
                 left_panel.setSize(width, main_panel.getHeight());
                 left_panel.updateUI();
 
-//                middle_panel.setLayout(new BorderLayout());
-//                middle_panel.add(image_list, BorderLayout.CENTER);
-
-//                image_list.setSize(width, main_panel.getHeight());
-//                middle_panel.updateUI();
-
-                System.out.println("Width (int): " + width);
-//                left_scroll_pane.setPreferredSize(new Dimension((int) (main_panel.getWidth() * 0.3), main_panel.getHeight()));
-//                middle_scroll_pane.setPreferredSize(new Dimension((int) (main_panel.getWidth() * 0.4), main_panel.getHeight()));
-//                    System.out.println("Width of panel: " + width);
-
                 try {
 
                     image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
@@ -301,7 +263,6 @@ public class MainWindow extends JFrame {
         this.setContentPane(main_panel);
         this.setSize(850, 550);
         this.setMinimumSize(new Dimension(850, 550));
-//        this.setResizable(false);
         this.setLocationRelativeTo(null);
 
         // set JFrame icon
@@ -333,9 +294,8 @@ public class MainWindow extends JFrame {
         }
 
         // empty list
-        if (srcs.size() == 0) {
+        if (images.size() == 0) {
 
-            current_position_label.setText("Current position: 0/0");
             image_preview.setIcon(null);
 
         }
@@ -352,10 +312,11 @@ public class MainWindow extends JFrame {
         // add checkboxes and update panel to refresh
         image_list = il.getImageList(images);
 
+        // add image list to middle panel
         middle_panel.setLayout(new BorderLayout());
         middle_panel.add(image_list, BorderLayout.CENTER);
 
-//        middle_panel.add(image_list);
+        // list selection listener
         il.getList().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -368,6 +329,7 @@ public class MainWindow extends JFrame {
                     left_panel.setSize((int) (width * 2), main_panel.getHeight());
                     System.out.println("Width (int): " + width);
 
+                    // update image preview
                     image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
                     main_panel.updateUI();
 
