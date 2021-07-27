@@ -1,6 +1,10 @@
 package com.bensuniverse.WebsiteImageExtractor;
 
-public class ImageObject {
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class ImageObject implements Serializable {
 
     private String url_short;
     private String url;
@@ -18,9 +22,16 @@ public class ImageObject {
 
     }
 
-    public String getUrl() {
+    public URL getURL() {
+        try {
 
-        return this.url;
+            return new URL(this.url);
 
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+            return null;
+
+        }
     }
 }
