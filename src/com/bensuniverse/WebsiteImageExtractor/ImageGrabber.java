@@ -85,11 +85,15 @@ public class ImageGrabber {
 
                         }
 
+                        // loop through extensions
                         for (String extension : extensions) {
 
+                            // check if URL contains extension and make sure the extension is the end of the image
+                            // this avoids many invalid images that have text after the extension (usually duplicates)
                             if (str.substring(str.lastIndexOf("/") + 1).contains(extension) &&
                             str.substring(str.indexOf(extension)).length() <= extension.length()) {
 
+                                // add image to image list
                                 images.add(new ImageObject(str.substring(str.lastIndexOf("/") + 1), str));
 
                             }
