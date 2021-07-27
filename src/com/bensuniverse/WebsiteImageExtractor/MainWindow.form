@@ -60,7 +60,7 @@
         </constraints>
         <properties>
           <font style="1"/>
-          <text value="Select Images to Download:"/>
+          <text value="Image List:"/>
         </properties>
       </component>
       <grid id="a12c2" binding="right_panel" layout-manager="GridBagLayout">
