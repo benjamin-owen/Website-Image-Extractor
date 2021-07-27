@@ -8,6 +8,7 @@
 - Merge #5 and #6 (Implement drag and drop image list)
 - Optimize image grabber
 - Add additional image information above image preview
+- Remove footer text
 
 **v1.2**
 - Improve image searching ability (algorithm will attempt to create a valid image URL from an incomplete URL)
