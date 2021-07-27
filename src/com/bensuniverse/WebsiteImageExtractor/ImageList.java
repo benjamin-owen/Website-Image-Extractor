@@ -169,38 +169,6 @@ public class ImageList extends JFrame {
         }
     }
 
-//    private class MyMouseAdapter extends MouseInputAdapter {
-//        private boolean mouseDragging = false;
-//        private int dragSourceIndex;
-//
-//        @Override
-//        public void mousePressed(MouseEvent e) {
-//            if (SwingUtilities.isLeftMouseButton(e)) {
-//                dragSourceIndex = list.getSelectedIndex();
-//                mouseDragging = true;
-//            }
-//        }
-//
-//        @Override
-//        public void mouseReleased(MouseEvent e) {
-//            mouseDragging = false;
-//        }
-//
-//        @Override
-//        public void mouseDragged(MouseEvent e) {
-//            if (mouseDragging) {
-//                int currentIndex = list.locationToIndex(e.getPoint());
-//                if (currentIndex != dragSourceIndex) {
-//                    int dragTargetIndex = list.getSelectedIndex();
-//                    ImageObject dragElement = list_model.get(dragSourceIndex);
-//                    list_model.remove(dragSourceIndex);
-//                    list_model.add(dragTargetIndex, dragElement);
-//                    dragSourceIndex = currentIndex;
-//                }
-//            }
-//        }
-//    }
-
     private DefaultListModel<ImageObject> createListModel(ArrayList<ImageObject> listElements) {
         DefaultListModel<ImageObject> listModel = new DefaultListModel<ImageObject>();
         for (ImageObject element : listElements) {
