@@ -1,5 +1,8 @@
 # Changelog
 
+**v1.3.1**
+- Fix #7 (Typo)
+
 **v1.3**
 - Fix #1 (WebP images not downloading)
 - Fix #2 (Incorrect number prefix for sequential files)
