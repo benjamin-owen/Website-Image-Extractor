@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainWindow extends JFrame {
 
@@ -37,10 +38,7 @@ public class MainWindow extends JFrame {
     private JLabel status_label;
     private JTextField folder_location_textfield;
     private JButton browse_button;
-    private JButton move_up_button;
-    private JButton move_down_button;
     private JScrollPane left_scroll_pane;
-    private JLabel current_position_label;
     private JButton delete_selected_items_button;
 
     // unused GUI declarations
@@ -58,9 +56,7 @@ public class MainWindow extends JFrame {
     private JSeparator separator_02;
     private JSeparator separator_01;
     private JPanel left_panel;
-    private JLabel footer_label;
     private JCheckBox file_rename_checkbox;
-    private JButton select_none_button;
     private JButton select_all_button;
     private JPanel checkbox_button_panel;
     private JLabel image_name_label;
@@ -75,29 +71,22 @@ public class MainWindow extends JFrame {
 
     private String output_folder;
 
-    private JScrollPane image_list;
-    private int selected_index;
+    private final ImageGrabber ig = new ImageGrabber();
+    private final AutoCheckbox ac = new AutoCheckbox();
 
-    private ImageGrabber ig = new ImageGrabber();
-    private AutoCheckbox ac = new AutoCheckbox();
-
-    private ImageList il = new ImageList();
+    private final ImageList il = new ImageList();
 
     public MainWindow() {
 
         // set window title
-        super(Main.getName());
-
-        // set footer label text (version and other info)
-        String footer_text = "Version " + Main.getVersion() + " | " + Main.getAuthor() + " | " + Main.getDate();
-        footer_label.setText(footer_text);
+        super(Main.getName() + " v" + Main.getVersion());
 
         // set JScrollPane scroll speed
         left_scroll_pane.getVerticalScrollBar().setUnitIncrement(16);
         middle_scroll_pane.getVerticalScrollBar().setUnitIncrement(16);
 
         // set default selected index
-        selected_index = 1;
+        int selected_index = 1;
 
         // set default output folder to current working directory
         try {
@@ -273,7 +262,7 @@ public class MainWindow extends JFrame {
         // set JFrame icon
         try {
 
-            this.setIconImage(new ImageIcon(ImageIO.read(getClass().getResource("/icon.png"))).getImage());
+            this.setIconImage(new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResource("/icon.png")))).getImage());
 
         } catch (IOException e) {
 
@@ -315,7 +304,7 @@ public class MainWindow extends JFrame {
         start_index_spinner.setValue(0);
 
         // add checkboxes and update panel to refresh
-        image_list = il.getImageList(images);
+        JScrollPane image_list = il.getImageList(images);
 
         // add image list to middle panel
         middle_panel.setLayout(new BorderLayout());
