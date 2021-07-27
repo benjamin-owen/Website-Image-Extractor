@@ -2,6 +2,8 @@ package com.bensuniverse.WebsiteImageExtractor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +23,6 @@ public class MainWindow extends JFrame {
     private JProgressBar main_progress_bar;
     private JButton download_button;
     private JButton grab_image_button;
-    private JComboBox image_list_combobox;
     private JLabel image_preview;
     private JScrollPane middle_scroll_pane;
     private JPanel middle_panel;
@@ -68,10 +69,12 @@ public class MainWindow extends JFrame {
 
     private ArrayList<ImageObject> images = new ArrayList<ImageObject>();
 
+    public static URL selected_image;
 //    private ArrayList<JCheckBox> images = new ArrayList<JCheckBox>();
 
     private String output_folder;
 
+    private JScrollPane image_list;
     private int selected_index;
 
     private ImageGrabber ig = new ImageGrabber();
@@ -92,9 +95,6 @@ public class MainWindow extends JFrame {
         left_scroll_pane.getVerticalScrollBar().setUnitIncrement(16);
         middle_scroll_pane.getVerticalScrollBar().setUnitIncrement(16);
 
-        // try to keep JComboBox from expanding (30 characters)
-        image_list_combobox.setPrototypeDisplayValue("123456789012345678901234567890");
-
         // set default selected index
         selected_index = 1;
 
@@ -109,9 +109,6 @@ public class MainWindow extends JFrame {
         folder_location_textfield.setText(output_folder + "/");
         if (output_folder.equals("/")) // root dir
             folder_location_textfield.setText("/");
-
-        // get JComboBox model (only way to add/remove items)
-        DefaultComboBoxModel model = (DefaultComboBoxModel) image_list_combobox.getModel();
 
         // "Grab Images" button listener
         grab_image_button.addActionListener(new ActionListener() {
@@ -137,52 +134,15 @@ public class MainWindow extends JFrame {
                     }
                 }
 
+                images.clear();
                 for (int i = 0; i < srcs.size(); i++) {
 
                     images.add(new ImageObject(srcs_NOURL.get(i), srcs.get(i)));
 
                 }
 
-                // get list of checkboxes (already checked) based on user input in JTextFields
-//                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
+                updateImageLists();
 
-                updateImageLists(model);
-
-            }
-        });
-
-        // "Image List" JComboBox listener
-        image_list_combobox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-                try {
-
-                    URL url = null;
-
-                    // get selected image file name
-                    String selected_url_short = image_list_combobox.getSelectedItem().toString();
-
-                    // get full image URL from just image file name
-                    url = ig.getURLfromShortened(srcs, srcs_NOURL, selected_url_short);
-
-                    System.out.println("Image preview url: " + url);
-
-                    // set image_preview (JLabel) icon to a preview of the selected image
-                    int width = (int) (main_panel.getWidth() * 0.3);
-//                    System.out.println("Width of panel: " + width);
-                    image_preview.setIcon(new ImageIcon(ig.getImageFromURL(url, true, width)));
-
-                    selected_index = image_list_combobox.getSelectedIndex();
-                    current_position_label.setText("Current position: " + (selected_index + 1) + "/" + srcs_NOURL.size());
-
-                    main_panel.updateUI();
-
-                } catch (NullPointerException e) {
-
-                    // probably refreshing list (new URL inputted)
-
-                }
             }
         });
 
@@ -191,25 +151,18 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                // remove existing checkboxes
-                middle_panel.remove(0);
+                // get list of indicies to select
+                ArrayList<Integer> indicies_list = ac.getSelection(images, included_strings_textfield.getText(), excluded_strings_textfield.getText());
+                int[] indicies = new int[indicies_list.size()];
+                for (int i = 0; i < indicies.length; i++) {
 
-                // get list of checkboxes (already checked) based on user input in JTextFields
-//                images = ac.getCheckboxes(srcs_NOURL, included_strings_textfield.getText(), excluded_strings_textfield.getText());
+                    indicies[i] = indicies_list.get(i);
 
-                // create vertical box (same as earlier, to place checkboxes in)
-                Box box = Box.createVerticalBox();
+                }
+                il.getList().setSelectedIndices(indicies);
 
-                // loop through JCheckBox ArrayList
-//                for (JCheckBox checkbox : images) {
-//
-//                    // add checkbox to box (may be checked)
-//                    box.add(checkbox);
-//
-//                }
-
-                // add box to panel and refresh
-                middle_panel.add(box);
+                // give list focus
+                il.getList().requestFocusInWindow();
                 middle_panel.updateUI();
 
             }
@@ -220,25 +173,12 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                // will be used to get ONLY checked checkboxes
-                ArrayList<String> checkedBoxes = new ArrayList<String>();
-
-                    // loop through each JCheckBox in the previously populated JCheckBox ArrayList
-                    for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
-
-                        // if checkbox is checked, add full URL to checkedBoxes ArrayList
-                        System.out.println(((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).isSelected());
-                        if (((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).isSelected())
-                            checkedBoxes.add(ig.getURLfromShortened(srcs, srcs_NOURL, ((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).getText().toString()).toString());
-
-                }
-
                 // download images in new thread to allow for progress bar updates and prevent frozen UI
                 new Thread(new Runnable() {
                     public void run() {
 
                         // download all images
-                        ig.downloadImages(checkedBoxes, output_folder, file_rename_checkbox.isSelected(), file_prefix_textarea.getText(), extension_combobox.getSelectedItem().toString(), (int) start_index_spinner.getValue(), main_progress_bar, right_panel, status_label);
+                        ig.downloadImages(images, output_folder, file_rename_checkbox.isSelected(), file_prefix_textarea.getText(), extension_combobox.getSelectedItem().toString(), (int) start_index_spinner.getValue(), main_progress_bar, right_panel, status_label);
 
                         // when finished, set status text and fill progress bar
                         status_label.setText("Done!");
@@ -286,55 +226,21 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // "Deselect all" button listener
-        select_none_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                il.getList().clearSelection();
-                il.getList().requestFocusInWindow();
-
-            }
-        });
-
         // "Delete selected items" button listener
         delete_selected_items_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                // remove all unchecked boxes
-                ArrayList<String> remove_srcs = new ArrayList<String>();
-                ArrayList<String> remove_srcs_NOURL = new ArrayList<String>();
-                ArrayList<JCheckBox> remove_checkboxes = new ArrayList<JCheckBox>();
+                // get selected values and remove them from images
+                int[] to_remove = il.getList().getSelectedIndices();
+                for (int i = to_remove.length - 1; i >= 0; i--) {
 
-                for (int i = 0; i < il.getModel().getSize(); i++) {
-
-                    System.out.println("Item: " + i);
-                    System.out.println("Short URL: " + ((ImageObject) il.getModel().getElementAt(i)).toString());
-                    System.out.println("URL: " + ((ImageObject) il.getModel().getElementAt(i)).getUrl());
-                    System.out.println("***");
+                    System.out.println("Removing: " + to_remove[i]);
+                    images.remove(to_remove[i]);
 
                 }
 
-                // loop through each JCheckBox in the previously populated JCheckBox ArrayList
-                for (int i = 0; i < ((Box) middle_panel.getComponent(0)).getComponentCount(); i++) {
-
-                    // if checkbox is checked, add full URL to checkedBoxes ArrayList
-                    System.out.println(((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).isSelected());
-                    if (!((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)).isSelected()) {
-
-                        // remove unchecked items from all lists
-                        remove_srcs.add(srcs.get(i));
-                        remove_srcs_NOURL.add(srcs_NOURL.get(i));
-                        remove_checkboxes.add(((JCheckBox) ((Box) middle_panel.getComponent(0)).getComponent(i)));
-
-                    }
-                }
-                srcs.removeAll(remove_srcs);
-                srcs_NOURL.removeAll(remove_srcs_NOURL);
-                images.removeAll(remove_checkboxes);
-
-                updateImageLists(model);
+                updateImageLists();
 
             }
         });
@@ -361,9 +267,32 @@ public class MainWindow extends JFrame {
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
 
-                // force image_list_combobox action listener
-                image_list_combobox.setSelectedIndex(image_list_combobox.getSelectedIndex());
+                // update image preview
+                int width = (int) (main_panel.getWidth() * 0.3);
+                left_panel.setSize(width, main_panel.getHeight());
+                left_panel.updateUI();
 
+//                middle_panel.setLayout(new BorderLayout());
+//                middle_panel.add(image_list, BorderLayout.CENTER);
+
+//                image_list.setSize(width, main_panel.getHeight());
+//                middle_panel.updateUI();
+
+                System.out.println("Width (int): " + width);
+//                left_scroll_pane.setPreferredSize(new Dimension((int) (main_panel.getWidth() * 0.3), main_panel.getHeight()));
+//                middle_scroll_pane.setPreferredSize(new Dimension((int) (main_panel.getWidth() * 0.4), main_panel.getHeight()));
+//                    System.out.println("Width of panel: " + width);
+
+                try {
+
+                    image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
+                    main_panel.updateUI();
+
+                } catch (NullPointerException e) {
+
+                    System.out.println("No image selected!");
+
+                }
             }
         });
 
@@ -390,7 +319,7 @@ public class MainWindow extends JFrame {
         url.requestFocusInWindow();
     }
 
-    private void updateImageLists(DefaultComboBoxModel model) {
+    private void updateImageLists() {
 
         try {
 
@@ -420,11 +349,37 @@ public class MainWindow extends JFrame {
         file_prefix_textarea.setText("");
         start_index_spinner.setValue(0);
 
-        // force image_list_combobox action listener
-        image_list_combobox.setSelectedIndex(image_list_combobox.getSelectedIndex());
-
         // add checkboxes and update panel to refresh
-        middle_panel.add(il.getImageList(images));
+        image_list = il.getImageList(images);
+
+        middle_panel.setLayout(new BorderLayout());
+        middle_panel.add(image_list, BorderLayout.CENTER);
+
+//        middle_panel.add(image_list);
+        il.getList().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                try {
+
+                    selected_image = ((ImageObject) il.getList().getSelectedValue()).getURL();
+
+                    int width = (int) (main_panel.getWidth() * 0.3);
+                    left_panel.setSize((int) (width * 2), main_panel.getHeight());
+                    System.out.println("Width (int): " + width);
+
+                    image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
+                    main_panel.updateUI();
+
+                } catch (NullPointerException npe) {
+
+                    main_panel.updateUI();
+
+                }
+
+            }
+        });
+
         middle_panel.updateUI();
 
     }

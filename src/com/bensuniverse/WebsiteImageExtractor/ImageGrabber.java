@@ -237,24 +237,17 @@ public class ImageGrabber {
 
     }
 
-    public void downloadImages(ArrayList<String> urls, String file_location, boolean rename, String prefix, String extension, int start_index, JProgressBar progress_bar, JPanel panel, JLabel status) {
+    public void downloadImages(ArrayList<ImageObject> images, String file_location, boolean rename, String prefix, String extension, int start_index, JProgressBar progress_bar, JPanel panel, JLabel status) {
 
         // get number of digits of total image count
-        int prefixNum = (int) Math.log10((start_index - 1) + urls.size()); // (start_index + urls.size()) in order to add 0 when not starting at 0
+        int prefixNum = (int) Math.log10((start_index - 1) + images.size()); // (start_index + urls.size()) in order to add 0 when not starting at 0
         System.out.println("prefixNum: " + prefixNum);
 
         // loop through each index of image list
-        for (int i = 0; i < urls.size(); i++) {
+        for (int i = 0; i < images.size(); i++) {
             System.out.println("i: " + i);
 
-            String url = urls.get(i);
-
-            URL currentURL = null;
-            try {
-                currentURL = new URL(url);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            URL currentURL = images.get(i).getURL();
 
             // get image from URL
             BufferedImage currentImg = getImageFromURL(currentURL, false, 1);
@@ -310,15 +303,15 @@ public class ImageGrabber {
             }
 
             // get percentage progress
-            double progress = (i * 100.0) / urls.size();
-            System.out.println(i + " | " + urls.size() + " | " + "Progress: " + progress);
+            double progress = (i * 100.0) / images.size();
+            System.out.println(i + " | " + images.size() + " | " + "Progress: " + progress);
 
             // set progress bar value
             progress_bar.setValue((int) progress);
             progress_bar.setString((int) progress + "%");
 
             // set status text with current progress
-            status.setText("Downloading..." + i + "/" + urls.size());
+            status.setText("Downloading..." + i + "/" + images.size());
 
             // update panel with progress bar and status text so it refreshes
             panel.updateUI();

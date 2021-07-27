@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 public class AutoCheckbox {
 
-    public ArrayList<JCheckBox> getCheckboxes(ArrayList<String> urls, String include, String exclude) {
+    public ArrayList<Integer> getSelection(ArrayList<ImageObject> images, String include, String exclude) {
 
-        ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
+        ArrayList<Integer> selected_indicies = new ArrayList<Integer>();
 
         boolean missed = false;
         boolean found = false;
 
         // loop through each URL in URL list
-        for (String currentURL : urls) {
+        for (ImageObject currentImage : images) {
 
-            System.out.println("Current url: " + currentURL);
+            System.out.println("Current url: " + currentImage.toString());
 
             missed = false;
 
@@ -25,7 +25,7 @@ public class AutoCheckbox {
                 System.out.println("Current istr: " + istr);
                 System.out.println("Current missed: " + missed);
 
-                if (!currentURL.contains(istr.trim()) && !istr.equals(""))
+                if (!currentImage.toString().contains(istr.trim()) && !istr.equals(""))
                     missed = true;
 
             }
@@ -38,20 +38,18 @@ public class AutoCheckbox {
                 System.out.println("Current estr: " + estr);
                 System.out.println("Current found: " + found);
 
-                if (currentURL.contains(estr.trim()) && !estr.equals(""))
+                if (currentImage.toString().contains(estr.trim()) && !estr.equals(""))
                     found = true;
 
             }
 
             // if file name met all qualifications, add checked box (unchecked otherwise)
             if (!missed && !found)
-                checkboxes.add(new JCheckBox(currentURL, true));
-            else
-                checkboxes.add(new JCheckBox(currentURL, false));
+                selected_indicies.add(images.indexOf(currentImage));
 
         }
 
-        // return JCheckBox list
-        return checkboxes;
+        // return Integer list
+        return selected_indicies;
     }
 }
