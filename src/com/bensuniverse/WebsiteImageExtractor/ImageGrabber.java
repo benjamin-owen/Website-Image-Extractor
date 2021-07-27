@@ -123,10 +123,13 @@ public class ImageGrabber {
 
     }
 
-    public BufferedImage getImageFromURL(URL url, boolean resize, int max_width) {
+    public Object[] getImageFromURL(URL url, boolean resize, int max_width) {
 
         BufferedImage image = null;
         BufferedImage resized = null;
+
+        int width = 0;
+        int height = 0;
         try {
 
             // open URL connection (spoof browser to avoid HTTP 403 errors)
@@ -140,6 +143,8 @@ public class ImageGrabber {
 
                 // read image from URL
                 image = ImageIO.read(connection.getInputStream());
+                width = image.getWidth();
+                height = image.getHeight();
 
             } catch (Exception e) {
 
@@ -166,7 +171,7 @@ public class ImageGrabber {
                 image = ImageIO.read(getClass().getResource("/file_not_found.jpg"));
                 image = resize(image, max_width);
 
-                return image;
+                return new Object[]{image, width, height};
 
             } catch (IOException e2) {
 
@@ -179,9 +184,9 @@ public class ImageGrabber {
 
         // return resized image if true, full size image if false
         if (resize)
-            return resized;
+            return new Object[]{resized, width, height};
         else
-            return image;
+            return new Object[]{image, width, height};
 
     }
 
@@ -223,7 +228,7 @@ public class ImageGrabber {
             URL currentURL = images.get(i).getURL();
 
             // get image from URL
-            BufferedImage currentImg = getImageFromURL(currentURL, false, 1);
+            BufferedImage currentImg = (BufferedImage) getImageFromURL(currentURL, false, 1)[0];
 
             // logic to add 0s for alphabetical purposes
             int currentNum = i + start_index;

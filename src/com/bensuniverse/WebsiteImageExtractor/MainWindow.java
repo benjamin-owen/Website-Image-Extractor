@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -62,6 +63,10 @@ public class MainWindow extends JFrame {
     private JButton select_none_button;
     private JButton select_all_button;
     private JPanel checkbox_button_panel;
+    private JLabel image_name_label;
+    private JLabel image_resolution_label;
+    private JLabel image_name;
+    private JLabel image_res;
 
     // other variables declarations
     private ArrayList<ImageObject> images = new ArrayList<ImageObject>();
@@ -247,7 +252,7 @@ public class MainWindow extends JFrame {
 
                 try {
 
-                    image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
+                    image_preview.setIcon(new ImageIcon((BufferedImage) ig.getImageFromURL(selected_image, true, width)[0]));
                     main_panel.updateUI();
 
                 } catch (NullPointerException e) {
@@ -330,7 +335,15 @@ public class MainWindow extends JFrame {
                     System.out.println("Width (int): " + width);
 
                     // update image preview
-                    image_preview.setIcon(new ImageIcon(ig.getImageFromURL(selected_image, true, width)));
+                    Object[] image = ig.getImageFromURL(selected_image, true, width);
+                    image_preview.setIcon(new ImageIcon((BufferedImage) image[0]));
+
+                    String image_title = il.getList().getSelectedValue().toString();
+                    if (image_title.length() > 25)
+                        image_name.setText(image_title.substring(0, 25) + "...");
+                    else
+                        image_name.setText(image_title);
+                    image_res.setText(image[1] + " x " + image[2]);
                     main_panel.updateUI();
 
                 } catch (NullPointerException npe) {
