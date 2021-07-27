@@ -41,6 +41,7 @@ public class ImageGrabber {
         System.out.println("GUESS URL: " + guess_url);
 
         // list to contain image URLs
+        ArrayList<String> images_dupechecker = new ArrayList<String>();
         ArrayList<ImageObject> images = new ArrayList<ImageObject>();
 
         // avoid HTTP 403 errors
@@ -91,10 +92,12 @@ public class ImageGrabber {
                             // check if URL contains extension and make sure the extension is the end of the image
                             // this avoids many invalid images that have text after the extension (usually duplicates)
                             if (str.substring(str.lastIndexOf("/") + 1).contains(extension) &&
-                            str.substring(str.indexOf(extension)).length() <= extension.length()) {
+                            str.substring(str.indexOf(extension)).length() <= extension.length() &&
+                            !images_dupechecker.contains(str.substring(str.lastIndexOf("/") + 1))) {
 
                                 // add image to image list
                                 images.add(new ImageObject(str.substring(str.lastIndexOf("/") + 1), str));
+                                images_dupechecker.add(str.substring(str.lastIndexOf("/") + 1));
 
                             }
                         }
