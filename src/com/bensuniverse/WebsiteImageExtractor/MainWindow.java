@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
     private JSpinner start_index_spinner;
     private JTextField included_strings_textfield;
     private JTextField excluded_strings_textfield;
-    private JButton update_checkboxes_button;
+    private JButton update_selected_button;
     private JComboBox extension_combobox;
     private JPanel right_panel;
     private JLabel status_label;
@@ -113,8 +113,8 @@ public class MainWindow extends JFrame {
             }
         });
 
-        // "Update Checkboxes" button listener
-        update_checkboxes_button.addActionListener(new ActionListener() {
+        // "Update Selected Images" button listener
+        update_selected_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
